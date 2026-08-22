@@ -1,0 +1,16 @@
+{
+    "naver": {
+        "client_id": "YOUR_NAVER_CLIENT_ID",
+        "client_secret": "YOUR_NAVER_CLIENT_SECRET"
+    },
+    "kakao_pc": {
+        "chat_rooms": [
+            "채팅방 이름"
+        ],
+        "exe_path": "C:\\Program Files (x86)\\Kakao\\KakaoTalk\\KakaoTalk.exe"
+    },
+    "schedule": {
+        "hour": 6,
+        "minute": 0
+    }
+}
