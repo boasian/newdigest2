@@ -117,6 +117,28 @@ def fetch_kbo_yesterday() -> list:
     ]
 
 
+def is_kbo_in_season(days: int = 7) -> bool:
+    """최근 days일 안에 KBO 경기가 있었으면 시즌 중으로 봅니다.
+
+    시즌이 끝나면 False가 되어 단신에서 야구 항목이 빠지고,
+    다음 시즌 경기가 열리면 자동으로 다시 포함됩니다.
+    """
+    today = date.today()
+    start = today - timedelta(days=days)
+    months = {(start.year, start.month), (today.year, today.month)}
+    for year, month in months:
+        for g in _fetch_month_games(year, month):
+            if g["away"] not in _KBO_TEAMS or g["home"] not in _KBO_TEAMS:
+                continue
+            try:
+                played = date(year, int(g["date"][:2]), int(g["date"][3:5]))
+            except (ValueError, TypeError):
+                continue
+            if start <= played < today:
+                return True
+    return False
+
+
 def fetch_kbo_standings() -> list:
     """시즌 누적 승패율 기준 KBO 팀 순위 반환."""
     today = date.today()
